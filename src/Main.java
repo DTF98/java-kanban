@@ -9,15 +9,16 @@ public class Main {
             System.out.println("Выберите что хотите сделать:");
             printMenu();
             int command = scanner.nextInt();
+            scanner.nextLine();
             switch (command) {
                 case 1:
-                    System.out.println(manager.getAllTasks());
+                    manager.printAllTasks();
                     break;
                 case 2:
-                    System.out.println(manager.getAllEpics());
+                    manager.printAllEpics();
                     break;
                 case 3:
-                    System.out.println(manager.getAllSubTasks());
+                    manager.printAllSubTasks();
                     break;
                 case 4:
                     System.out.println("Введите id Эпика:");

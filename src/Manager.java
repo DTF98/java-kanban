@@ -8,28 +8,22 @@ public class Manager {
 
     private int uniqueId;
 
-    public ArrayList<String> getAllTasks() {
-        ArrayList<String> list = new ArrayList<>();
+    public void printAllTasks() {
         for (Task task : tasks.values()) {
-            list.add(task.getTitle());
+            System.out.println(task.getTitle());
         }
-        return list;
     }
 
-    public ArrayList<String> getAllSubTasks() {
-        ArrayList<String> list = new ArrayList<>();
+    public void printAllSubTasks() {
         for (Subtask subtask : subtasks.values()) {
-            list.add(subtask.getTitle());
+            System.out.println(subtask.getTitle());
         }
-        return list;
     }
 
-    public ArrayList<String> getAllEpics() {
-        ArrayList<String> list = new ArrayList<>();
+    public void printAllEpics() {
         for (Epic epic : epics.values()) {
-            list.add(epic.getTitle());
+            System.out.println(epic.getTitle());
         }
-        return list;
     }
 
     public ArrayList<String> getSubtaskInEpic(int epicId) {
