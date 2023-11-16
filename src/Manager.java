@@ -60,6 +60,7 @@ public class Manager {
 
     public void createTask(String title, String description) {
         int id = this.uniqueId + 1;
+        this.uniqueId++;
         if (searchRepeatTask(title)) {
             System.out.println("Такая задача уже существует");
         } else {
@@ -69,6 +70,7 @@ public class Manager {
 
     public void createEpic(String title, String description) {
         int id = this.uniqueId + 1;
+        this.uniqueId++;
         if (searchRepeatEpic(title)) {
             System.out.println("Такой Эпик уже существует");
         } else {
@@ -78,6 +80,7 @@ public class Manager {
 
     public void createSubtask(String title, String description, int epicId) {
         int id = this.uniqueId + 1;
+        this.uniqueId++;
         if (searchRepeatSubtask(title)) {
             System.out.println("Такая Подзадача уже существует");
         } else {
@@ -89,6 +92,7 @@ public class Manager {
 
     public void updateTask(int taskId, String title, String description, String status) {
         int id = this.uniqueId + 1;
+        this.uniqueId++;
         if (searchRepeatTask(title)) {
             System.out.println("Такая задача уже существует");
         } else {
@@ -103,6 +107,7 @@ public class Manager {
         }
         epics.remove(epicId);
         int id = this.uniqueId + 1;
+        this.uniqueId++;
         epics.put(id, new Epic(title, description));
     }
 
@@ -110,6 +115,7 @@ public class Manager {
         subtasks.remove(subtaskId);
         epics.get(epicId).removeId(subtaskId);
         int id = this.uniqueId + 1;
+        this.uniqueId++;
         epics.get(epicId).setSubtasks(id);
         subtasks.put(id, new Subtask(title, description, epicId, status));
         epics.get(epicId).setStatus(estimateStatusEpic(epics.get(epicId)));
@@ -120,6 +126,9 @@ public class Manager {
     }
 
     public void deleteEpicById(int epicId) {
+        for (int i = 0; i < epics.get(epicId).subtaskIds.size(); i++) {
+            subtasks.remove(epics.get(epicId).subtaskIds.get(i));
+        }
         epics.remove(epicId);
     }
 

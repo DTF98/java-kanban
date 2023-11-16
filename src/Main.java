@@ -1,10 +1,39 @@
 import java.util.Scanner;
 
 public class Main {
+//    Создайте 2 задачи, один эпик с 2 подзадачами, а другой эпик с 1 подзадачей.
+//    Распечатайте списки эпиков, задач и подзадач, через System.out.println(..)
+//    Измените статусы созданных объектов, распечатайте. Проверьте, что статус задачи и подзадачи сохранился, а статус эпика рассчитался по статусам подзадач.
+//    И, наконец, попробуйте удалить одну из задач и один из эпиков.
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Manager manager = new Manager();
+        manager.createTask("Название1", "Описание1");//1
+        manager.createTask("Название2", "Описание2");//2
+        manager.createEpic("Название3", "Описание3");//3
+        manager.createSubtask("Название4", "Описание4", 3);//4
+        manager.createSubtask("Название5", "Описание5", 3);//5
+        manager.createEpic("Название6", "Описание6");//6
+        manager.createSubtask("Название7", "Описание7", 6);//7
+        System.out.println(manager.tasks.get(1).getTitle());
+        System.out.println(manager.tasks.get(2).getTitle());
+        System.out.println(manager.epics.get(3).getTitle());
+        System.out.println(manager.subtasks.get(4).getTitle());
+        System.out.println(manager.subtasks.get(5).getTitle());
+        System.out.println(manager.epics.get(6).getTitle());
+        System.out.println(manager.subtasks.get(7).getTitle());
+        manager.updateTask(1, "Название11", "Описание11", "DONE");//8
+        System.out.println(manager.tasks.get(8).getStatus());
+        manager.updateSubtask(7, "Название7", "Описание7", "DONE", 6);//9
+        System.out.println(manager.epics.get(6).getStatus()); // Показал работу изменения статуса NEW на DONE в Эпиках
+        manager.updateSubtask(4, "Название8", "Описание8", "DONE", 3);
+        System.out.println(manager.epics.get(3).getStatus());// Показал работу изменения статуса NEW на IN_PROGRESS, при присутствии DONE в Эпиках
+        manager.deleteTaskById(2);
+        System.out.println(manager.tasks.size());// До удаления было 2 - стало 1
+        manager.deleteEpicById(3);
+        System.out.println(manager.epics.size());// До удаления было 2 - стало 1
+        System.out.println(manager.subtasks.size());// До удаления было 3 - стало 1
         while (true) {
             System.out.println("Выберите что хотите сделать:");
             printMenu();
