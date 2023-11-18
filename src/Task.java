@@ -1,13 +1,10 @@
 import java.util.Objects;
 
 public class Task {
-    private String title; /*Название задачи*/
-    private String description; /*Описание задачи*/
-    private int id;  /*Уникальный идентификационный номер задачи*/
-    private String status; /*Мы будем выделять следующие этапы жизни задачи:
-                            a. NEW — задача только создана, но к её выполнению ещё не приступили.
-                            b. IN_PROGRESS — над задачей ведётся работа.
-                            c. DONE — задача выполнена.*/
+    private final String title;
+    private final String description;
+    private int id;
+    private String status;
 
     public Task(String title, String description) {
         this.title = title;
@@ -15,9 +12,16 @@ public class Task {
         this.status = "NEW";
     }
 
-    public Task(String title, String description, String status) {
+    public Task(String title, String description, int id) {
         this.title = title;
         this.description = description;
+        this.id = id;
+    }
+
+    public Task(int id, String title, String description, String status) {
+        this.title = title;
+        this.description = description;
+        this.id = id;
         this.status = status;
     }
 
@@ -33,24 +37,8 @@ public class Task {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getStatus() {

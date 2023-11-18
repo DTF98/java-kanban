@@ -1,39 +1,35 @@
 import java.util.Scanner;
 
 public class Main {
-//    Создайте 2 задачи, один эпик с 2 подзадачами, а другой эпик с 1 подзадачей.
-//    Распечатайте списки эпиков, задач и подзадач, через System.out.println(..)
-//    Измените статусы созданных объектов, распечатайте. Проверьте, что статус задачи и подзадачи сохранился, а статус эпика рассчитался по статусам подзадач.
-//    И, наконец, попробуйте удалить одну из задач и один из эпиков.
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Manager manager = new Manager();
-        manager.createTask("Название1", "Описание1");//1
-        manager.createTask("Название2", "Описание2");//2
-        manager.createEpic("Название3", "Описание3");//3
-        manager.createSubtask("Название4", "Описание4", 3);//4
-        manager.createSubtask("Название5", "Описание5", 3);//5
-        manager.createEpic("Название6", "Описание6");//6
-        manager.createSubtask("Название7", "Описание7", 6);//7
-        System.out.println(manager.tasks.get(1).getTitle());
-        System.out.println(manager.tasks.get(2).getTitle());
-        System.out.println(manager.epics.get(3).getTitle());
-        System.out.println(manager.subtasks.get(4).getTitle());
-        System.out.println(manager.subtasks.get(5).getTitle());
-        System.out.println(manager.epics.get(6).getTitle());
-        System.out.println(manager.subtasks.get(7).getTitle());
-        manager.updateTask(1, "Название11", "Описание11", "DONE");//8
-        System.out.println(manager.tasks.get(8).getStatus());
-        manager.updateSubtask(7, "Название7", "Описание7", "DONE", 6);//9
-        System.out.println(manager.epics.get(6).getStatus()); // Показал работу изменения статуса NEW на DONE в Эпиках
-        manager.updateSubtask(4, "Название8", "Описание8", "DONE", 3);
-        System.out.println(manager.epics.get(3).getStatus());// Показал работу изменения статуса NEW на IN_PROGRESS, при присутствии DONE в Эпиках
+        manager.createTask(new Task("Название1", "Описание1"));//1
+        manager.createTask(new Task("Название2", "Описание2"));//2
+        manager.createEpic(new Epic("Название3", "Описание3"));//3
+        manager.createSubtask(new Subtask("Название4", "Описание4", 3));//4
+        manager.createSubtask(new Subtask("Название5", "Описание5", 3));//5
+        manager.createEpic(new Epic("Название6", "Описание6"));//6
+        manager.createSubtask(new Subtask("Название7", "Описание7", 6));//7
+        System.out.println(manager.getTasks().get(1).getTitle());
+        System.out.println(manager.getTasks().get(2).getTitle());
+        System.out.println(manager.getEpics().get(3).getTitle());
+        System.out.println(manager.getSubtasks().get(4).getTitle());
+        System.out.println(manager.getSubtasks().get(5).getTitle());
+        System.out.println(manager.getEpics().get(6).getTitle());
+        System.out.println(manager.getSubtasks().get(7).getTitle());
+        manager.updateTask(new Task(1, "Название11", "Описание11", "DONE"));
+        System.out.println(manager.getTasks().get(1).getStatus());
+        manager.updateSubtask(new Subtask(7, "Название7", "Описание7", "DONE", 6));
+        System.out.println(manager.getEpics().get(6).getStatus()); // Показал работу изменения статуса NEW на DONE в Эпиках
+        manager.updateSubtask(new Subtask(4, "Название8", "Описание8", "DONE", 3));
+        System.out.println(manager.getEpics().get(3).getStatus());// Показал работу изменения статуса NEW на IN_PROGRESS, при присутствии DONE в Эпиках
         manager.deleteTaskById(2);
-        System.out.println(manager.tasks.size());// До удаления было 2 - стало 1
+        System.out.println(manager.getTasks().size());// До удаления было 2 - стало 1
         manager.deleteEpicById(3);
-        System.out.println(manager.epics.size());// До удаления было 2 - стало 1
-        System.out.println(manager.subtasks.size());// До удаления было 3 - стало 1
+        System.out.println(manager.getEpics().size());// До удаления было 2 - стало 1
+        System.out.println(manager.getSubtasks().size());// До удаления было 3 - стало 1
         while (true) {
             System.out.println("Выберите что хотите сделать:");
             printMenu();
@@ -41,13 +37,13 @@ public class Main {
             scanner.nextLine();
             switch (command) {
                 case 1:
-                    manager.printAllTasks();
+                    manager.getAllTasks();
                     break;
                 case 2:
-                    manager.printAllEpics();
+                    manager.getAllEpics();
                     break;
                 case 3:
-                    manager.printAllSubTasks();
+                    manager.getAllSubTasks();
                     break;
                 case 4:
                     System.out.println("Введите id Эпика:");
@@ -66,31 +62,31 @@ public class Main {
                 case 8:
                     System.out.println("Введите id Задачи:");
                     int id2 = scanner.nextInt();
-                    manager.getTaskById(id2);
+                    System.out.println(manager.getTaskById(id2));
                     break;
                 case 9:
                     System.out.println("Введите id Эпика:");
                     int id3 = scanner.nextInt();
-                    manager.getEpicById(id3);
+                    System.out.println(manager.getEpicById(id3));
                     break;
                 case 10:
                     System.out.println("Введите id Подзадачи:");
                     int id4 = scanner.nextInt();
-                    manager.getSubtaskById(id4);
+                    System.out.println(manager.getSubtaskById(id4));
                     break;
                 case 11:
                     System.out.println("Введите название задачи");
                     String title1 = scanner.nextLine();
                     System.out.println("Введите описание задачи");
                     String description1 = scanner.nextLine();
-                    manager.createTask(title1, description1);
+                    manager.createTask(new Task(title1, description1));
                     break;
                 case 12:
                     System.out.println("Введите название Эпика");
                     String title2 = scanner.nextLine();
                     System.out.println("Введите описание Эпика");
                     String description2 = scanner.nextLine();
-                    manager.createEpic(title2, description2);
+                    manager.createEpic(new Epic(title2, description2));
                     break;
                 case 13:
                     System.out.println("Введите название подзадачи");
@@ -99,7 +95,7 @@ public class Main {
                     String description3 = scanner.nextLine();
                     System.out.println("Введите id Эпика, к которому эта подзадача относится");
                     int idEpic1 = scanner.nextInt();
-                    manager.createSubtask(title3, description3, idEpic1);
+                    manager.createSubtask(new Subtask(title3, description3, idEpic1));
                     break;
                 case 14:
                     System.out.println("Введите  id задачи, которую хотите изменить");
@@ -110,7 +106,7 @@ public class Main {
                     String description4 = scanner.nextLine();
                     System.out.println("Введите обновлённый статус задачи");
                     String status1 = scanner.nextLine();
-                    manager.updateTask(idTask1, title4, description4, status1);
+                    manager.updateTask(new Task(idTask1, title4, description4, status1));
                     break;
                 case 15:
                     System.out.println("Введите обновлённый id Эпика");
@@ -119,7 +115,7 @@ public class Main {
                     String title5 = scanner.nextLine();
                     System.out.println("Введите обновлённое описание Эпика");
                     String description5 = scanner.nextLine();
-                    manager.updateEpic(idEpic2, title5, description5);
+                    manager.updateEpic(new Epic(title5, description5, idEpic2));
                     break;
                 case 16:
                     System.out.println("Введите id Эпика, к которому эта подзадача относится");
@@ -132,7 +128,7 @@ public class Main {
                     String description6 = scanner.nextLine();
                     System.out.println("Введите обновлённый статус подзадачи");
                     String status2 = scanner.nextLine();
-                    manager.updateSubtask(idSubtask1, title6, description6, status2, idEpic3);
+                    manager.updateSubtask(new Subtask(idSubtask1, title6, description6, status2, idEpic3));
                     break;
                 case 17:
                     System.out.println("Введите id задачи для удаления");
