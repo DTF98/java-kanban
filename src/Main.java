@@ -109,7 +109,7 @@ public class Main {
                     manager.updateTask(new Task(idTask1, title4, description4, status1));
                     break;
                 case 15:
-                    System.out.println("Введите обновлённый id Эпика");
+                    System.out.println("Введите id Эпика");
                     int idEpic2 = scanner.nextInt();
                     System.out.println("Введите обновлённое название Эпика");
                     String title5 = scanner.nextLine();
@@ -120,7 +120,7 @@ public class Main {
                 case 16:
                     System.out.println("Введите id Эпика, к которому эта подзадача относится");
                     int idEpic3 = scanner.nextInt();
-                    System.out.println("Введите обновлённый id подзадачи");
+                    System.out.println("Введите id подзадачи");
                     int idSubtask1 = scanner.nextInt();
                     System.out.println("Введите обновлённое название подзадачи");
                     String title6 = scanner.nextLine();
@@ -136,7 +136,7 @@ public class Main {
                     manager.deleteTaskById(idTask2);
                     break;
                 case 18:
-                    System.out.println("Введите id Эпика для данной подзадачи");
+                    System.out.println("Введите id Эпика");
                     int idEpic4 = scanner.nextInt();
                     manager.deleteEpicById(idEpic4);
                     break;

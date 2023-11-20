@@ -47,6 +47,7 @@ public class Manager {
     public void deleteAllSubtasks() {
         subtasks.clear();
         for (Epic epic : epics.values()) {
+            epic.removeAllId();
             epic.setStatus("NEW");
         }
     }
@@ -89,39 +90,68 @@ public class Manager {
     }
 
     public void updateTask(Task task) {
-        tasks.put(task.getId(), task);
+        if (tasks.containsKey(task.getId())) {
+            tasks.put(task.getId(), task);
+        } else {
+            System.out.println("Такой задачи не существует!");
+        }
     }
 
     public void updateEpic(Epic epic) {
-        for (int i = 0; i < epics.get(epic.getId()).getSubtaskIds().size(); i++) {
-            subtasks.remove(epics.get(epic.getId()).getSubtaskIds().get(i));
+        if (epics.containsKey(epic.getId())) {
+            for (int i = 0; i < epics.get(epic.getId()).getSubtaskIds().size(); i++) {
+                subtasks.remove(epics.get(epic.getId()).getSubtaskIds().get(i));
+            }
+            epics.put(epic.getId(), epic); //Я не обновляю статус Эпика и точно не трогаю набор подзадач(Для этого
+            // специально завел в конструкторе Эпика перегрузку)
+        } else {
+            System.out.println("Такого эпика не существует!");
         }
-        epics.put(epic.getId(), epic);
+
     }
 
     public void updateSubtask(Subtask subtask) {
-        subtasks.put(subtask.getId(), subtask);
-        epics.get(subtask.getEpicId()).setStatus(estimateStatusEpic(epics.get(subtask.getEpicId())));
+        if (subtasks.containsKey(subtask.getId())) {
+            subtasks.put(subtask.getId(), subtask);
+            epics.get(subtask.getEpicId()).setStatus(estimateStatusEpic(epics.get(subtask.getEpicId())));
+        } else {
+            System.out.println("Такой подзадачи не существует!");
+        }
     }
 
     public void deleteTaskById(int taskId) {
-        tasks.remove(taskId);
+        if (tasks.containsKey(taskId)) {
+            tasks.remove(taskId);
+        } else {
+            System.out.println("Такой задачи не существует!");
+        }
+
     }
 
     public void deleteEpicById(int epicId) {
-        for (int i = 0; i < epics.get(epicId).getSubtaskIds().size(); i++) {
-            subtasks.remove(epics.get(epicId).getSubtaskIds().get(i));
+        if (epics.containsKey(epicId)) {
+            for (int i = 0; i < epics.get(epicId).getSubtaskIds().size(); i++) {
+                subtasks.remove(epics.get(epicId).getSubtaskIds().get(i));
+            }
+            epics.remove(epicId);
+        } else {
+            System.out.println("Такого эпика не существует!");
         }
-        epics.remove(epicId);
+
     }
 
     public void deleteSubtaskById(int subtaskId, int epicId) {
-        subtasks.remove(subtaskId);
-        if (epics.containsKey(epicId)) {
-            epics.get(epicId).removeId(subtaskId);
+        if (subtasks.containsKey(subtaskId)) {
+            subtasks.remove(subtaskId);
+            if (epics.containsKey(epicId)) {
+                epics.get(epicId).removeId(subtaskId);
+            } else {
+                System.out.println("Ошибка! Такого эпика не существует.");
+            }
         } else {
-            System.out.println("Ошибка! Такого эпика не существует.");
+            System.out.println("Ошибка! Такой подзадачи не существует.");
         }
+
     }
 
     private String estimateStatusEpic(Epic epic) {
@@ -146,38 +176,4 @@ public class Manager {
         }
     }
 }
-
-//    private boolean searchRepeatTask(String title) {
-//        boolean flag = false;
-//        for (Task task : tasks.values()) {
-//            if (task.getTitle().equals(title)) {
-//                flag = true;
-//                break;
-//            }
-//        }
-//        return flag;
-//    }
-
-//    private boolean searchRepeatEpic(String title) {
-//        boolean flag = false;
-//        for (Epic epic : epics.values()) {
-//            if (epic.getTitle().equals(title)) {
-//                flag = true;
-//                break;
-//            }
-//        }
-//        return flag;
-//    }
-
-//    private boolean searchRepeatSubtask(String title) {
-//        boolean flag = false;
-//        for (Subtask subtask : subtasks.values()) {
-//            if (subtask.getTitle().equals(title)) {
-//                flag = true;
-//                break;
-//            }
-//        }
-//        return flag;
-//    }
-
 
