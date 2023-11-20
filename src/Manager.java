@@ -99,9 +99,6 @@ public class Manager {
 
     public void updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())) {
-            for (int i = 0; i < epics.get(epic.getId()).getSubtaskIds().size(); i++) {
-                subtasks.remove(epics.get(epic.getId()).getSubtaskIds().get(i));
-            }
             epics.put(epic.getId(), epic); //Я не обновляю статус Эпика и точно не трогаю набор подзадач(Для этого
             // специально завел в конструкторе Эпика перегрузку)
         } else {
