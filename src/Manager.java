@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Manager {
+    private final HashMap<Integer, Task> tasks = new HashMap<>();
+    private final HashMap<Integer, Epic> epics = new HashMap<>();
+    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+
     public HashMap<Integer, Task> getTasks() {
         return tasks;
     }
@@ -13,10 +17,6 @@ public class Manager {
     public HashMap<Integer, Subtask> getSubtasks() {
         return subtasks;
     }
-
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
     private int uniqueId;
 
@@ -99,8 +99,7 @@ public class Manager {
 
     public void updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())) {
-            epics.put(epic.getId(), epic); //Я не обновляю статус Эпика и точно не трогаю набор подзадач(Для этого
-            // специально завел в конструкторе Эпика перегрузку)
+            epics.put(epic.getId(), epic);
         } else {
             System.out.println("Такого эпика не существует!");
         }
@@ -142,6 +141,7 @@ public class Manager {
             subtasks.remove(subtaskId);
             if (epics.containsKey(epicId)) {
                 epics.get(epicId).removeId(subtaskId);
+                epics.get(epicId).setStatus(estimateStatusEpic(epics.get(epicId)));
             } else {
                 System.out.println("Ошибка! Такого эпика не существует.");
             }
