@@ -1,16 +1,18 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Manager manager = new Manager();
-        manager.createTask(new Task("Название1", "Описание1"));//1
-        manager.createTask(new Task("Название2", "Описание2"));//2
-        manager.createEpic(new Epic("Название3", "Описание3"));//3
+        TaskManager manager = Managers.getDefault();
+        HistoryManager historyManager = Managers.getDefaultHistory();
+        manager.createTask(new Task("Название1", "Описание1", 1));//1
+        manager.createTask(new Task("Название2", "Описание2", 2));//2
+        manager.createEpic(new Epic("Название3", "Описание3", 3));//3
         manager.createSubtask(new Subtask("Название4", "Описание4", 3));//4
         manager.createSubtask(new Subtask("Название5", "Описание5", 3));//5
-        manager.createEpic(new Epic("Название6", "Описание6"));//6
+        manager.createEpic(new Epic("Название6", "Описание6", 6));//6
         manager.createSubtask(new Subtask("Название7", "Описание7", 6));//7
         System.out.println(manager.getTasks().get(1).getTitle());
         System.out.println(manager.getTasks().get(2).getTitle());
@@ -24,12 +26,37 @@ public class Main {
         manager.updateSubtask(new Subtask(7, "Название7", "Описание7", "DONE", 6));
         System.out.println(manager.getEpics().get(6).getStatus()); // Показал работу изменения статуса NEW на DONE в Эпиках
         manager.updateSubtask(new Subtask(4, "Название8", "Описание8", "DONE", 3));
-        System.out.println(manager.getEpics().get(3).getStatus());// Показал работу изменения статуса NEW на IN_PROGRESS, при присутствии DONE в Эпиках
+        System.out.println(manager.getEpics().get(3).getStatus());// Показал работу изменения статуса NEW на IN_PROGRESS,
+        // при присутствии DONE в Эпиках
         manager.deleteTaskById(2);
         System.out.println(manager.getTasks().size());// До удаления было 2 - стало 1
         manager.deleteEpicById(3);
         System.out.println(manager.getEpics().size());// До удаления было 2 - стало 1
         System.out.println(manager.getSubtasks().size());// До удаления было 3 - стало 1
+        manager.createTask(new Task("Название20", "Описание20", 8));//8
+        manager.createTask(new Task("Название21", "Описание21", 9));//9
+        manager.createTask(new Task("Название22", "Описание22", 10));//10
+        manager.createTask(new Task("Название23", "Описание23", 11));//11
+        System.out.println("Проверка истории");
+        historyManager.add(manager.getTaskById(1));//1
+        historyManager.add(manager.getTaskById(1));//2
+        historyManager.add(manager.getEpicById(6));//3
+        historyManager.add(manager.getTaskById(1));//4
+        historyManager.add(manager.getTaskById(1));//5
+        historyManager.add(manager.getSubtaskById(7));//6
+        historyManager.add(manager.getTaskById(1));//7
+        historyManager.add(manager.getTaskById(8));//8
+        historyManager.add(manager.getTaskById(9));//9
+        historyManager.add(manager.getTaskById(10));//10
+        for (Task task : historyManager.getHistory()) {
+            System.out.println(task.getId());
+        }
+        System.out.println("Проверка удаления лишних элементов истории");
+        historyManager.add(manager.getTaskById(11));//11
+        for (Task task : historyManager.getHistory()) {
+            System.out.println(task.getId());
+        }
+
         while (true) {
             System.out.println("Выберите что хотите сделать:");
             printMenu();
@@ -37,21 +64,21 @@ public class Main {
             scanner.nextLine();
             switch (command) {
                 case 1:
-                    manager.getAllTasks();
+                    ArrayList<Task> Tasks = new ArrayList<>(manager.getAllTasks());
                     break;
                 case 2:
-                    manager.getAllEpics();
+                    ArrayList<Epic> Epics = new ArrayList<>(manager.getAllEpics());
                     break;
                 case 3:
-                    manager.getAllSubTasks();
+                    ArrayList<Subtask> Subtasks1 = new ArrayList<>(manager.getAllSubTasks());
                     break;
                 case 4:
                     System.out.println("Введите id Эпика:");
                     int id1 = scanner.nextInt();
-                    manager.getSubtaskInEpic(id1);
+                    ArrayList<Subtask> Subtasks2 = new ArrayList<>(manager.getSubtaskInEpic(id1));
                     break;
                 case 5:
-                    manager.deleteAlltasks();
+                    manager.deleteAllTasks();
                     break;
                 case 6:
                     manager.deleteAllEpics();
@@ -62,7 +89,7 @@ public class Main {
                 case 8:
                     System.out.println("Введите id Задачи:");
                     int id2 = scanner.nextInt();
-                    System.out.println(manager.getTaskById(id2));
+                    System.out.println(manager.getTaskById(id2).getTitle());
                     break;
                 case 9:
                     System.out.println("Введите id Эпика:");
@@ -143,11 +170,12 @@ public class Main {
                 case 19:
                     System.out.println("Введите id подзадачи для удаления");
                     int idSubtask2 = scanner.nextInt();
-                    System.out.println("Введите id Эпика для данной подзадачи");
-                    int idEpic5 = scanner.nextInt();
-                    manager.deleteSubtaskById(idSubtask2, idEpic5);
+                    manager.deleteSubtaskById(idSubtask2);
                     break;
                 case 20:
+                    historyManager.getHistory();
+                    break;
+                case 21:
                     return;
                 default:
                     System.out.println("Введена неправильная команда");
@@ -176,6 +204,7 @@ public class Main {
         System.out.println("Удаление по идентификатору задачи - 17");
         System.out.println("Удаление по идентификатору Эпика - 18");
         System.out.println("Удаление по идентификатору подзадачи для конкретного Эпика - 19");
-        System.out.println("Выход из программы - 20");
+        System.out.println("Запросить историю просмотренных задач - 20");
+        System.out.println("Выход из программы - 21");
     }
 }

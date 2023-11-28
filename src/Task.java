@@ -4,12 +4,12 @@ public class Task {
     private final String title;
     private final String description;
     private int id;
-    private String status;
+    private TasksStatus taskStatus;
 
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
-        this.status = "NEW";
+        this.taskStatus = TasksStatus.NEW;
     }
 
     public Task(String title, String description, int id) {
@@ -22,15 +22,7 @@ public class Task {
         this.title = title;
         this.description = description;
         this.id = id;
-        this.status = status;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return id == task.id && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(status, task.status);
+        this.taskStatus = TasksStatus.valueOf(status);
     }
 
     public String getTitle() {
@@ -42,11 +34,11 @@ public class Task {
     }
 
     public String getStatus() {
-        return status;
+        return taskStatus.name();
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.taskStatus = TasksStatus.valueOf(status);
     }
 
 }
