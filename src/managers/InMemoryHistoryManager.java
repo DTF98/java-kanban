@@ -1,12 +1,17 @@
-import java.util.ArrayList;
+package managers;
+
+import managers.HistoryManager;
+import model.Task;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final List<Task> history = new ArrayList<>();
+    private final LinkedList<Task> history = new LinkedList<>();
 
     @Override
     public void add(Task task) {
-        history.add(task);
+        history.addLast(task);
     }
 
     @Override
@@ -14,7 +19,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         int counterOfUnnecessaryTasks = history.size() - 10;
         if (counterOfUnnecessaryTasks > 0) {
             for (int i = 0; i < counterOfUnnecessaryTasks; i++) {
-                history.remove(i);
+                history.removeFirst();
             }
         }
         return history;

@@ -1,6 +1,13 @@
+package managers;
+
+import managers.HistoryManager;
+import model.Epic;
+import model.Subtask;
+import model.Task;
+import model.TasksStatus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -9,7 +16,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
     private int uniqueId = 1;
-    HistoryManager historyManager = Managers.getDefaultHistory();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public HashMap<Integer, Task> getTasks() {
