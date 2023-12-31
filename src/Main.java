@@ -12,8 +12,9 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        TaskManager manager = Managers.getDefault();
         HistoryManager historyManager = Managers.getDefaultHistory();
+        TaskManager manager = Managers.getDefault(historyManager);
+
         manager.createTask(new Task("Название1", "Описание1", 1));//1
         manager.createTask(new Task("Название2", "Описание2", 2));//2
         manager.createEpic(new Epic("Название3", "Описание3", 3));//3
@@ -45,21 +46,16 @@ public class Main {
         manager.createTask(new Task("Название22", "Описание22", 10));//10
         manager.createTask(new Task("Название23", "Описание23", 11));//11
         System.out.println("Проверка истории");
-        historyManager.add(manager.getTaskById(1));//1
-        historyManager.add(manager.getTaskById(1));//2
-        historyManager.add(manager.getEpicById(6));//3
-        historyManager.add(manager.getTaskById(1));//4
-        historyManager.add(manager.getTaskById(1));//5
-        historyManager.add(manager.getSubtaskById(7));//6
-        historyManager.add(manager.getTaskById(1));//7
-        historyManager.add(manager.getTaskById(8));//8
-        historyManager.add(manager.getTaskById(9));//9
-        historyManager.add(manager.getTaskById(10));//10
-        for (Task task : historyManager.getHistory()) {
-            System.out.println(task.getId());
-        }
-        System.out.println("Проверка удаления лишних элементов истории");
-        historyManager.add(manager.getTaskById(11));//11
+        manager.getTaskById(1);//1
+        manager.getTaskById(1);//2
+        manager.getEpicById(6);//3
+        manager.getTaskById(1);//4
+        manager.getTaskById(1);//5
+        manager.getSubtaskById(7);//6
+        manager.getTaskById(1);//7
+        manager.getTaskById(8);//8
+        manager.getTaskById(9);//9
+        manager.getTaskById(10);//10
         for (Task task : historyManager.getHistory()) {
             System.out.println(task.getId());
         }
