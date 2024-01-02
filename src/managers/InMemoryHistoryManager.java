@@ -13,14 +13,15 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private final Map<Integer, Node<Task>> history = new HashMap<>();
 
-    public Node<Task> linkLast(Task element) {
+    private Node<Task> linkLast(Task element) {
         final Node<Task> oldTail = tail;
         final Node<Task> newNode = new Node<>(tail, element, null);
         tail = newNode;
-        if (oldTail == null)
+        if (oldTail == null) {
             head = newNode;
-        else
+        } else {
             oldTail.next = newNode;
+        }
         size++;
         return newNode;
     }
@@ -72,4 +73,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         history.remove(id);
     }
 
+    Throwable a = new NoSuchElementException();
 }
+
