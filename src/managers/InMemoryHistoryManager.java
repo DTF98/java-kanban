@@ -72,7 +72,5 @@ public class InMemoryHistoryManager implements HistoryManager {
         removeNode(history.get(id));
         history.remove(id);
     }
-
-    Throwable a = new NoSuchElementException();
 }
 
