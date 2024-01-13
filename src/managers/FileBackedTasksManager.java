@@ -38,7 +38,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         System.out.println(manager.getSubtaskById(4).getTitle());
         System.out.println(manager.getSubtaskById(5).getTitle());
 
-        /** Файл не пустой, закооментируйте тесты выше, и расскомментируйте тесты ниже для проверки чтения из файла */
+        /** Файл не пустой, закоментируйте тесты выше, и раскомментируйте тесты ниже для проверки чтения из файла */
 
 //        System.out.println("Проверка чтения из файла");
 //        for (Task task : manager.getAllTasks()) {
