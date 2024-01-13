@@ -18,4 +18,10 @@ public class Subtask extends Task {
         super(subtaskId, title, description, status);
         this.epicId = epicId;
     }
+
+    @Override
+    public String toString() {
+        return super.getId() + "," + TasksType.SUBTASK + "," + super.getTitle() + "," + super.getStatus()
+                + "," + super.getDescription() + "," + epicId + ",";
+    }
 }

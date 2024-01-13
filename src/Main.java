@@ -1,64 +1,28 @@
+import managers.FileBackedTasksManager;
 import managers.HistoryManager;
 import managers.Managers;
-import managers.TaskManager;
 import model.Epic;
 import model.Subtask;
 import model.Task;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        File fileSave = new File("./src/Files/Data.csv");
         HistoryManager historyManager = Managers.getDefaultHistory();
-        TaskManager manager = Managers.getDefault(historyManager);
-
-        manager.createTask(new Task("Название1", "Описание1", 1));//1
-        manager.createTask(new Task("Название2", "Описание2", 2));//2
-        manager.createEpic(new Epic("Название3", "Описание3", 3));//3
-        manager.createSubtask(new Subtask("Название4", "Описание4", 3));//4
-        manager.createSubtask(new Subtask("Название5", "Описание5", 3));//5
-        manager.createEpic(new Epic("Название6", "Описание6", 6));//6
-        manager.createSubtask(new Subtask("Название7", "Описание7", 6));//7
-        System.out.println(manager.getTasks().get(1).getTitle());
-        System.out.println(manager.getTasks().get(2).getTitle());
-        System.out.println(manager.getEpics().get(3).getTitle());
-        System.out.println(manager.getSubtasks().get(4).getTitle());
-        System.out.println(manager.getSubtasks().get(5).getTitle());
-        System.out.println(manager.getEpics().get(6).getTitle());
-        System.out.println(manager.getSubtasks().get(7).getTitle());
-        manager.updateTask(new Task(1, "Название11", "Описание11", "DONE"));
-        System.out.println(manager.getTasks().get(1).getStatus());
-        manager.updateSubtask(new Subtask(7, "Название7", "Описание7", "DONE", 6));
-        System.out.println(manager.getEpics().get(6).getStatus()); // Показал работу изменения статуса NEW на DONE в Эпиках
-        manager.updateSubtask(new Subtask(4, "Название8", "Описание8", "DONE", 3));
-        System.out.println(manager.getEpics().get(3).getStatus());// Показал работу изменения статуса NEW на IN_PROGRESS,
-        // при присутствии DONE в Эпиках
-        manager.deleteTaskById(2);
-        System.out.println(manager.getTasks().size());// До удаления было 2 - стало 1
-        manager.deleteEpicById(3);
-        System.out.println(manager.getEpics().size());// До удаления было 2 - стало 1
-        System.out.println(manager.getSubtasks().size());// До удаления было 3 - стало 1
-        manager.createTask(new Task("Название20", "Описание20", 8));//8
-        manager.createTask(new Task("Название21", "Описание21", 9));//9
-        manager.createTask(new Task("Название22", "Описание22", 10));//10
-        manager.createTask(new Task("Название23", "Описание23", 11));//11
-        System.out.println("Проверка истории");
-        manager.getTaskById(1);//1
-        manager.getTaskById(1);//2
-        manager.getEpicById(6);//3
-        manager.getTaskById(1);//4
-        manager.getTaskById(1);//5
-        manager.getSubtaskById(7);//6
-        manager.getTaskById(1);//7
-        manager.getTaskById(8);//8
-        manager.getTaskById(9);//9
-        manager.getTaskById(10);//10
-        for (Task task : historyManager.getHistory()) {
-            System.out.println(task.getId());
+        FileBackedTasksManager manager;
+        try {
+            manager = FileBackedTasksManager.loadFromFile(fileSave);
+        } catch (Exception e) {
+            System.out.println("Файл пустой!");
+            manager = new FileBackedTasksManager(historyManager, fileSave);
         }
+
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("Выберите что хотите сделать:");

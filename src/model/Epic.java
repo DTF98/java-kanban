@@ -38,4 +38,13 @@ public class Epic extends Task {
         subtaskIds.clear();
     }
 
+
+    //    public String toString() {
+//        return super.getId() + "," + TasksType.EPIC + "," + super.getTitle() + "," + super.getStatus()
+//                + "," + super.getDescription() + ",";
+//    }
+    public String toString(String status) {
+        return super.getId() + "," + TasksType.EPIC + "," + super.getTitle() + "," + status
+                + "," + super.getDescription() + ",";
+    }
 }

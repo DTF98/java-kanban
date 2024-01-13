@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Objects;
-
 public class Task {
     private final String title;
     private final String description;
@@ -39,8 +37,22 @@ public class Task {
         return taskStatus.name();
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setStatus(String status) {
         this.taskStatus = TasksStatus.valueOf(status);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String toString() {
+        return id + "," + TasksType.TASK + "," + title + "," + taskStatus.toString()
+                + "," + description + ",";
     }
 
 }

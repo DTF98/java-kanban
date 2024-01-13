@@ -1,6 +1,5 @@
 package managers;
 
-import managers.HistoryManager;
 import model.Node;
 import model.Task;
 
@@ -71,6 +70,10 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void remove(int id) {
         removeNode(history.get(id));
         history.remove(id);
+    }
+
+    public int getSize() {
+        return size;
     }
 }
 

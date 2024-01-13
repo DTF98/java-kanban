@@ -1,6 +1,5 @@
 package managers;
 
-import managers.HistoryManager;
 import model.Epic;
 import model.Subtask;
 import model.Task;
@@ -11,17 +10,21 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    protected final HashMap<Integer, Task> tasks = new HashMap<>();
+    protected final HashMap<Integer, Epic> epics = new HashMap<>();
+    protected final HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
-    private int uniqueId = 1;
-    private final HistoryManager historyManager;
+    protected int uniqueId = 1;
+
+    public HistoryManager getHistoryManager() {
+        return historyManager;
+    }
+
+    protected final HistoryManager historyManager;
 
     public InMemoryTaskManager(HistoryManager newHistory) {
         historyManager = newHistory;
     }
-
 
     @Override
     public HashMap<Integer, Task> getTasks() {
@@ -104,6 +107,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void createTask(Task task) {
         int id = this.uniqueId;
         this.uniqueId++;
+        task.setId(id);
         tasks.put(id, task);
     }
 
@@ -111,6 +115,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void createEpic(Epic epic) {
         int id = this.uniqueId;
         this.uniqueId++;
+        epic.setId(id);
         epics.put(id, epic);
     }
 
@@ -119,6 +124,7 @@ public class InMemoryTaskManager implements TaskManager {
         int id = this.uniqueId;
         this.uniqueId++;
         epics.get(subtask.getEpicId()).setSubtasks(id);
+        subtask.setId(id);
         subtasks.put(id, subtask);
         epics.get(subtask.getEpicId()).setStatus(estimateStatusEpic(epics.get(subtask.getEpicId())));
     }
@@ -191,7 +197,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     }
 
-    private String estimateStatusEpic(Epic epic) {
+    protected String estimateStatusEpic(Epic epic) {
         int countNew = 0;
         int countDone = 0;
         for (int i = 0; i < epic.getSubtaskIds().size(); i++) {
@@ -212,5 +218,6 @@ public class InMemoryTaskManager implements TaskManager {
             return "IN_PROGRESS";
         }
     }
+
 }
 
