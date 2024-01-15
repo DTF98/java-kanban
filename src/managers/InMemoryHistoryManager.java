@@ -1,6 +1,5 @@
 package managers;
 
-import model.Node;
 import model.Task;
 
 import java.util.*;
@@ -19,7 +18,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (oldTail == null) {
             head = newNode;
         } else {
-            oldTail.next = newNode;
+            oldTail.setNext(newNode);
         }
         size++;
         return newNode;
@@ -29,22 +28,22 @@ public class InMemoryHistoryManager implements HistoryManager {
         ArrayList<Task> tasks = new ArrayList<>();
         Node<Task> current = head;
         for (int i = 0; i < size; i++) {
-            tasks.add(current.data);
-            current = current.next;
+            tasks.add(current.getData());
+            current = current.getNext();
         }
         return tasks;
     }
 
     private void removeNode(Node<Task> a) {
-        if (a.prev != null && a.next != null) {
-            a.prev.next = a.next;
-            a.next.prev = a.prev;
-        } else if (a.prev != null) {
-            a.prev.next = null;
-            tail = a.prev;
-        } else if (a.next != null) {
-            a.next.prev = null;
-            head = a.next;
+        if (a.getPrev() != null && a.getNext() != null) {
+            a.getPrev().setNext(a.getNext());
+            a.getNext().setPrev(a.getPrev());
+        } else if (a.getPrev() != null) {
+            a.getPrev().setNext(null);
+            tail = a.getPrev();
+        } else if (a.getNext() != null) {
+            a.getNext().setPrev(null);
+            head = a.getNext();
         } else {
             head = null;
             tail = null;

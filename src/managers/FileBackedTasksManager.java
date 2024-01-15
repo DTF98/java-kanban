@@ -26,33 +26,33 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             manager = new FileBackedTasksManager(Managers.getDefaultHistory(), fileSave);
         }
         /** Файл пустой, эти тесты для его заполнения, закомментируйте для проверки чтения из файла */
-//
-//        manager.createTask(new Task("Название1", "Описание1"));//id = 1
-//        manager.createTask(new Task("Название2", "Описание2"));//id = 2
-//        manager.createEpic(new Epic("Название3", "Описание3"));//id = 3
-//        manager.createSubtask(new Subtask("Название4", "Описание4", 3));//id = 4
-//        manager.createSubtask(new Subtask("Название5", "Описание5", 3));//id = 5
-//        System.out.println(manager.getTaskById(1).getTitle());
-//        System.out.println(manager.getTaskById(2).getTitle());
-//        System.out.println(manager.getEpicById(3).getTitle());
-//        System.out.println(manager.getSubtaskById(4).getTitle());
-//        System.out.println(manager.getSubtaskById(5).getTitle());
+
+        manager.createTask(new Task("Название1", "Описание1"));//id = 1
+        manager.createTask(new Task("Название2", "Описание2"));//id = 2
+        manager.createEpic(new Epic("Название3", "Описание3"));//id = 3
+        manager.createSubtask(new Subtask("Название4", "Описание4", 3));//id = 4
+        manager.createSubtask(new Subtask("Название5", "Описание5", 3));//id = 5
+        System.out.println(manager.getTaskById(1).getTitle());
+        System.out.println(manager.getTaskById(2).getTitle());
+        System.out.println(manager.getEpicById(3).getTitle());
+        System.out.println(manager.getSubtaskById(4).getTitle());
+        System.out.println(manager.getSubtaskById(5).getTitle());
 
         /** Файл не пустой, закоментируйте тесты выше, и раскомментируйте тесты ниже для проверки чтения из файла */
 
-        System.out.println("Проверка чтения из файла");
-        for (Task task : manager.getAllTasks()) {
-            System.out.println(task.toString());
-        }
-        for (Epic epic : manager.getAllEpics()) {
-            System.out.println(epic.toString(manager.estimateStatusEpic(epic)));
-        }
-        for (Subtask subtask : manager.getAllSubTasks()) {
-            System.out.println(subtask.toString());
-        }
-        for (Task task : manager.getHistoryManager().getHistory()) {
-            System.out.println(task.getId());
-        }
+//        System.out.println("Проверка чтения из файла");
+//        for (Task task : manager.getAllTasks()) {
+//            System.out.println(task.toString());
+//        }
+//        for (Epic epic : manager.getAllEpics()) {
+//            System.out.println(epic.toString(manager.estimateStatusEpic(epic)));
+//        }
+//        for (Subtask subtask : manager.getAllSubTasks()) {
+//            System.out.println(subtask.toString());
+//        }
+//        for (Task task : manager.getHistoryManager().getHistory()) {
+//            System.out.println(task.getId());
+//        }
 
     }
 
