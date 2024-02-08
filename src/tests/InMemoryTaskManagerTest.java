@@ -1,9 +1,8 @@
-package Tests;
+package tests;
 
 import managers.InMemoryTaskManager;
 import model.Epic;
 import model.Subtask;
-import model.Task;
 import model.TimeIntersectionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -279,7 +278,6 @@ public class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager
             assertEquals(testStartTime, expectedStartTime);
             assertEquals(testEndTime, expectedEndTime);
             assertEquals(testDuration, expectedDuration);
-
         } catch (TimeIntersectionException e) {
             System.out.println(e.getMessage());
         }

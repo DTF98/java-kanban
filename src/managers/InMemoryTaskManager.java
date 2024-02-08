@@ -286,7 +286,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    public void estimateStartTimeEpic(Epic epic) {
+    private void estimateStartTimeEpic(Epic epic) {
         LocalDateTime minStartTime = LocalDateTime.MAX;
         int subtasksSize = subtasks.size();
         int count = 0;
@@ -315,7 +315,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public TreeSet<Task> getPrioritizedTasks() throws TimeIntersectionException {
-        return sortedTasks;
+        return new TreeSet<>(sortedTasks);
     }
 
     protected boolean checkingIntersections(Task task) {

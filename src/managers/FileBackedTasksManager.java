@@ -14,7 +14,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         super(newHistory);
         this.file = newFile;
     }
-    
 
     @Override
     public Task getTaskById(int taskId) {
