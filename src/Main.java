@@ -1,6 +1,7 @@
 import managers.FileBackedTasksManager;
 import managers.HistoryManager;
 import managers.Managers;
+import model.TimeIntersectionException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TimeIntersectionException {
         File fileSave = new File("./src/Files/Data.csv");
         HistoryManager historyManager = Managers.getDefaultHistory();
         FileBackedTasksManager manager;
@@ -143,6 +144,12 @@ public class Main {
                     historyManager.getHistory();
                     break;
                 case 21:
+                    try {
+                        System.out.println(manager.getPrioritizedTasks());
+                    } catch (TimeIntersectionException e) {
+                        throw new RuntimeException(e);
+                    }
+                case 22:
                     return;
                 default:
                     System.out.println("Введена неправильная команда");
@@ -172,6 +179,7 @@ public class Main {
         System.out.println("Удаление по идентификатору Эпика - 18");
         System.out.println("Удаление по идентификатору подзадачи для конкретного Эпика - 19");
         System.out.println("Запросить историю просмотренных задач - 20");
-        System.out.println("Выход из программы - 21");
+        System.out.println("Запросить упорядоченную коллекцию - 21");
+        System.out.println("Выход из программы - 22");
     }
 }

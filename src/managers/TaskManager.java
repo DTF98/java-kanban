@@ -3,6 +3,7 @@ package managers;
 import model.Epic;
 import model.Subtask;
 import model.Task;
+import model.TimeIntersectionException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,17 +35,17 @@ public interface TaskManager {
 
     Epic getEpicById(int epicId);
 
-    void createTask(Task task);
+    void createTask(Task task) throws TimeIntersectionException;
 
-    void createEpic(Epic epic);
+    void createEpic(Epic epic) throws TimeIntersectionException;
 
-    void createSubtask(Subtask subtask);
+    void createSubtask(Subtask subtask) throws TimeIntersectionException;
 
-    void updateTask(Task task);
+    void updateTask(Task task) throws TimeIntersectionException;
 
-    void updateEpic(Epic epic);
+    void updateEpic(Epic epic) throws TimeIntersectionException;
 
-    void updateSubtask(Subtask subtask);
+    void updateSubtask(Subtask subtask) throws TimeIntersectionException;
 
     void deleteTaskById(int taskId);
 
