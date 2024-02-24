@@ -1,28 +1,35 @@
-import managers.FileBackedTasksManager;
-import managers.HistoryManager;
+import managers.HttpTaskManager;
 import managers.Managers;
-import model.TimeIntersectionException;
+import exception.TimeIntersectionException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
+import server.HttpTaskServer;
+import server.KVServer;
 
-import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws TimeIntersectionException {
-        File fileSave = new File("./src/Files/Data.csv");
-        HistoryManager historyManager = Managers.getDefaultHistory();
-        FileBackedTasksManager manager;
-        try {
-            manager = FileBackedTasksManager.loadFromFile(fileSave);
-        } catch (Exception e) {
-            System.out.println("Файл пустой!");
-            manager = new FileBackedTasksManager(historyManager, fileSave);
-        }
-
+    public static void main(String[] args) throws TimeIntersectionException, IOException {
+        //     File fileSave = new File("./src/Files/Data.csv");
+        KVServer kvServer = new KVServer();
+        kvServer.start();
+        HttpTaskManager manager = Managers.getDefault(Managers.getDefaultHistory(),
+                URI.create("http://localhost:8078"), "MyKey");
+        HttpTaskServer taskServer = new HttpTaskServer(manager);
+        taskServer.start();
+        
+//        FileBackedTasksManager manager;
+//        try {
+//            manager = FileBackedTasksManager.loadFromFile(fileSave);
+//        } catch (Exception e) {
+//            System.out.println("Файл пустой!");
+//            manager = new FileBackedTasksManager(historyManager, fileSave);
+//        }
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -141,7 +148,7 @@ public class Main {
                     manager.deleteSubtaskById(idSubtask2);
                     break;
                 case 20:
-                    historyManager.getHistory();
+                    manager.getHistoryManager().getHistory();
                     break;
                 case 21:
                     try {
@@ -150,11 +157,20 @@ public class Main {
                         throw new RuntimeException(e);
                     }
                 case 22:
+                    System.out.println(manager.getClient().getAPI_TOKEN());
+                    break;
+//                case 23:
+//                    System.out.println("Введите токен");
+//                    String token = scanner.nextLine();
+//                    System.out.println("Введите ключ");
+//                    String key = scanner.nextLine();
+//                    manager.loadFromServer(key, token);
+//                    break;
+                case 23:
                     return;
                 default:
                     System.out.println("Введена неправильная команда");
             }
-
         }
     }
 
@@ -180,6 +196,7 @@ public class Main {
         System.out.println("Удаление по идентификатору подзадачи для конкретного Эпика - 19");
         System.out.println("Запросить историю просмотренных задач - 20");
         System.out.println("Запросить упорядоченную коллекцию - 21");
-        System.out.println("Выход из программы - 22");
+        System.out.println("ПОДАТЬ МНЕ ТОКЕН - 22");
+        System.out.println("Выход из программы - 23");
     }
 }

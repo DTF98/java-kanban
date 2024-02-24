@@ -1,18 +1,27 @@
 package managers;
 
+import exception.ManagerSaveException;
+import exception.TimeIntersectionException;
 import model.*;
 
 import java.io.*;
-import java.time.LocalDateTime;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
-    private final File file;
+    private File file;
+    private URI url;
 
     public FileBackedTasksManager(HistoryManager newHistory, File newFile) {
         super(newHistory);
         this.file = newFile;
+    }
+
+    public FileBackedTasksManager(URI url, HistoryManager newHistory) {
+        super(newHistory);
+        this.url = url;
     }
 
     @Override
@@ -152,7 +161,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     private static Task fromString(String value) {
         String[] task = value.split(",");
-
         if (task[1].equals("TASK")) {
             return new Task(Integer.parseInt(task[0]), task[2], task[4], task[3]);
         } else if (task[1].equals("EPIC")) {
@@ -188,6 +196,5 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
         return fromString;
     }
-
 
 }

@@ -3,7 +3,7 @@ package managers;
 import model.Epic;
 import model.Subtask;
 import model.Task;
-import model.TimeIntersectionException;
+import exception.TimeIntersectionException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

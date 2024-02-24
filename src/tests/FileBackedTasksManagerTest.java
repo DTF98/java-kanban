@@ -2,7 +2,7 @@ package tests;
 
 import managers.FileBackedTasksManager;
 import model.Epic;
-import model.TimeIntersectionException;
+import exception.TimeIntersectionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

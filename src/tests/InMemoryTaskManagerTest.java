@@ -3,7 +3,7 @@ package tests;
 import managers.InMemoryTaskManager;
 import model.Epic;
 import model.Subtask;
-import model.TimeIntersectionException;
+import exception.TimeIntersectionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

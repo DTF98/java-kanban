@@ -1,5 +1,6 @@
 package tests;
 
+import exception.TimeIntersectionException;
 import managers.TaskManager;
 import model.*;
 
