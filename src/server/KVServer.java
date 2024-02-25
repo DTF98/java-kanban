@@ -10,6 +10,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import exception.EnteringTheAddressException;
 import managers.Managers;
 
 /**
@@ -52,8 +53,8 @@ public class KVServer {
                 System.out.println("/load ждёт GET-запрос, а получил: " + h.getRequestMethod());
                 h.sendResponseHeaders(405, 0);
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            throw new EnteringTheAddressException("Проверьте, пожалуйста, адрес и повторите попытку.");
         }
     }
 

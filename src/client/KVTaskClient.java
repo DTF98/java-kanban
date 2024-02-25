@@ -1,5 +1,6 @@
 package client;
 
+import exception.EnteringTheAddressException;
 import server.KVServer;
 
 import java.io.IOException;
@@ -27,8 +28,7 @@ public class KVTaskClient {
                 System.out.println("Что-то пошло не так(метод register не вернул API_TOKEN). Сервер вернул код состояния: " + response.statusCode()); //TODO key + API token
             }
         } catch (IOException | InterruptedException e) {
-            System.out.println("Во время выполнения запроса возникла ошибка.\n" +
-                    "Проверьте, пожалуйста, адрес и повторите попытку.");
+            throw new EnteringTheAddressException("Проверьте, пожалуйста, адрес и повторите попытку.");
         }
 
     }
@@ -47,8 +47,7 @@ public class KVTaskClient {
                 System.out.println("Что-то пошло не так (метод put). Сервер вернул код состояния: " + response.statusCode());
             }
         } catch (IOException | InterruptedException e) { // обрабатываем ошибки отправки запроса
-            System.out.println("Во время выполнения запроса возникла ошибка.\n" +
-                    "Проверьте, пожалуйста, адрес и повторите попытку.");
+            throw new EnteringTheAddressException("Проверьте, пожалуйста, адрес и повторите попытку.");
         }
     }
 
@@ -68,8 +67,7 @@ public class KVTaskClient {
                 System.out.println("Что-то пошло не так(client метод load). Сервер вернул код состояния: " + response.statusCode());
             }
         } catch (IOException | InterruptedException e) { // обрабатываем ошибки отправки запроса
-            System.out.println("Во время выполнения запроса возникла ошибка.\n" +
-                    "Проверьте, пожалуйста, адрес и повторите попытку.");
+            throw new EnteringTheAddressException("Проверьте, пожалуйста, адрес и повторите попытку.");
         }
         result = "В далекой, далекой галактике(load)";
         return result;
